@@ -1,0 +1,88 @@
+name: 2026.10.29_Paper10.1_1e6-smoketest_Geant4
+tool: Geant4
+description: Smoke test 3 job cho 2026.10.29_Paper10.1_1e6_Geant4 sau khi sửa CRLF/AutoMac
+  (Claude).
+primaries: 1000000
+runners_per_account: 1
+timeout_minutes: 60
+max_rescue_rounds: 0
+drive:
+  parent_folder_id: ''
+  root_folder_id: 1ewEnyUY3L11OpOU0D6jLM36TiOqFVX0j
+github:
+  repo: ''
+subprojects:
+- name: MAC
+  samples:
+  - S0
+  - S1
+  - S2
+  - S3
+  - S4
+  - S5
+  - S6
+  - S7
+  - S8
+  thicknesses_cm:
+  - 0.005
+  - 0.1
+  - 0.3
+  - 0.5
+  - 0.8
+  - 1.0
+  - 1.5
+  - 2.0
+  - 2.5
+  - 3.0
+  energies_kev:
+  - 15.0
+  - 20.0
+  - 30.0
+  - 40.0
+  - 50.0
+  - 60.0
+  - 80.0
+  - 100.0
+  - 200.0
+  - 300.0
+  - 400.0
+  - 500.0
+  - 600.0
+  - 800.0
+  - 1000.0
+  - 2000.0
+  - 3000.0
+  - 4000.0
+  - 5000.0
+  - 6000.0
+  - 8000.0
+  - 10000.0
+  - 15000.0
+  jobs_file: jobs.csv
+  input_template: '{job}.mac'
+run:
+  command: '{sim_dir}/build/Sim {input}'
+  parser: csv_last_row
+  result_file: process_results.csv
+  outputs:
+  - '*.root'
+  copy_files: []
+storage: local
+harvest:
+  download_outputs: true
+analysis:
+  type: attenuation
+  intensity_column: CrossFlux_uncollided
+  i0:
+    mode: blank
+    sample: S0
+  densities_g_cm3:
+    S1: 2.39
+    S2: 2.725
+    S3: 2.908
+    S4: 3.103
+    S5: 3.836
+    S6: 3.909
+    S7: 4.181
+    S8: 4.411
+  theory_csv: theory/mac_theory.csv
